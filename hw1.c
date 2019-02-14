@@ -110,6 +110,29 @@ int fun8(int mass[],int i,int num1,int i1)
         return num1;
 }
 
+void fun10(int mass[],int i,int i1)
+{
+    if(i>i1)
+    {
+        fun10(mass,i,i1+2);
+        printf("%d ", mass[i1]);
+    }
+}
+
+void fun11(int mass[],int i,int i1)
+{
+    if(i>i1)
+    {
+        if(abs(mass[i1]%2)==1)
+        {
+            fun11(mass,i,i1+1);
+            printf("%d ", mass[i1]);
+        }
+        else
+            fun11(mass,i,i1+1);
+    }
+}
+
 int main()
 {
     setlocale(LC_ALL, "Rus");
@@ -158,6 +181,18 @@ int main()
     int mass1[7]={-1,2,3,10,-5,-20,5};
     num=fun8(mass1,i1,0,0);
     printf("%d",num);
+
+// 9 задание такое же как и 7
+    
+    printf("\nЗадание 10\n");
+    int i2=7;
+    int mass2[7]={-1,2,3,10,-5,-20,5};
+    fun10(mass2,i2,0);
+    
+    printf("\nЗадание 11\n");
+    int i3=7;
+    int mass3[7]={-1,2,3,10,-5,-20,5};
+    fun11(mass3,i3,0);
     
     return 0;
 }
