@@ -67,6 +67,16 @@ int fun5(int mass[],int i,int num1,int i1)
     return num1;
 }
 
+int fun6(int num,int i)
+{
+    if (num==0)
+        return i;
+    else
+    {
+        return fun6(num/10,i+1);
+    }
+}
+
 int main()
 {
     setlocale(LC_ALL, "Rus");
@@ -100,7 +110,11 @@ int main()
     num=fun5(mass,i,-1000,0);
     printf("%d",num);
     
-
+    printf("\nЗадание 6\n");
+    num=1234;
+    //scanf(" %d", &num);
+    num=fun6(num,0);
+    printf("%d",num);
     
     return 0;
 }
