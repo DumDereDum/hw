@@ -94,6 +94,21 @@ int fun7(int num,int sum)
     }
 }
 
+int fun8(int mass[],int i,int num1,int i1)
+{
+    if (i>i1)
+    {
+        if (mass[i1]>0)
+        {
+            num1=num1+mass[i1];
+            return fun8(mass,i,num1,i1+1);
+        }
+        else
+            return fun8(mass,i,num1,i1+1);
+    }
+    else
+        return num1;
+}
 
 int main()
 {
@@ -137,6 +152,12 @@ int main()
     num=1234;
     //scanf(" %d", &num);
     fun7(num,0);
+    
+    printf("\nЗадание 8\n");
+    int i1=7;
+    int mass1[7]={-1,2,3,10,-5,-20,5};
+    num=fun8(mass1,i1,0,0);
+    printf("%d",num);
     
     return 0;
 }
