@@ -70,12 +70,30 @@ int fun5(int mass[],int i,int num1,int i1)
 int fun6(int num,int i)
 {
     if (num==0)
+    {
+        printf("%d",i);
         return i;
+    }
     else
     {
         return fun6(num/10,i+1);
     }
 }
+
+int fun7(int num,int sum)
+{
+    if (num==0)
+    {
+        printf("%d",sum);
+        return sum;
+    }
+    else
+    {
+        sum=sum+num%10;
+        return fun7(num/10,sum);
+    }
+}
+
 
 int main()
 {
@@ -109,13 +127,16 @@ int main()
     int mass[7]={-1,2,3,10,-5,-20,5};
     num=fun5(mass,i,-1000,0);
     printf("%d",num);
-    
+
     printf("\nЗадание 6\n");
     num=1234;
     //scanf(" %d", &num);
-    num=fun6(num,0);
-    printf("%d",num);
+    fun6(num,0);
+    
+    printf("\nЗадание 7\n");
+    num=1234;
+    //scanf(" %d", &num);
+    fun7(num,0);
     
     return 0;
 }
-
