@@ -64,7 +64,7 @@ int fun5(int mass[],int i,int num1,int i1)
         else
             return fun5(mass,i,num1,i1+1);
     }
-    
+    return num1;
 }
 
 int main()
@@ -96,8 +96,9 @@ int main()
     
     printf("\nЗадание 5\n");
     int i=7;
-    int mass[7]={-1,2,3,10,-5,-20,50};
-    
+    int mass[7]={-1,2,3,10,-5,-20,5};
+    num=fun5(mass,i,-1000,0);
+    printf("%d",num);
     
 
     
