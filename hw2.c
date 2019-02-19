@@ -8,12 +8,12 @@
 #include <stdbool.h>
 
 
-void ShortesWord(char file1[], char file2[])
+void ShortestWord(char * file1, char * file2)
 {
     unsigned long min=1000;
     unsigned long len=1000;
     
-    char * string[len];
+    char string[len];
     char * str=NULL;
     
     FILE * file;
@@ -30,7 +30,7 @@ void ShortesWord(char file1[], char file2[])
     
     for(char *word=strtok(str," "); word; word= strtok(NULL, " "))
     {
-        if(srtlen(word)< min)
+        if(strlen(word)< min)
         {
             min = strlen(word);
             strcpy(string,word);
@@ -57,7 +57,11 @@ int main()
 {
     char file1[]="test1";
     char file2[]="test2";
-    ShortestWord(file1,file2);
+    
+    char * pfile1 = &file1[0];
+    char * pfile2 = &file2[0];
+    
+    ShortestWord(pfile1,pfile2);
     
     return 0;
 }
