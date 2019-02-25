@@ -285,8 +285,173 @@ void print1(const Complex  * num)
 
 }
 
-//------main.c (main.cpp)------//
+//------circle.h------//
 
+#ifndef circle_h
+#define circle_h
+
+#include <stdio.h>
+#include <math.h>
+
+struct point { int x; int y;} ;
+
+struct circle
+{
+    int radius;
+    struct point center;
+};
+
+int find_concentric( struct circle c[], int i);
+
+int find_nedte(struct circle c[], int i);
+
+int find_cross(struct circle c[], int i);
+
+int find_alone(struct circle c[], int i);
+
+#endif /* circle_h */
+
+//------circle.c (circle.cpp)------//
+
+#include "circle.h"
+
+int find_concentric( struct circle c[], int i)
+{
+    int res=0;
+    
+    for (int j=0; j<i; j++)
+    {
+        for(int k=j+1; k<i; k++)
+        {
+            if ((c[j].center.x==c[k].center.x)&&(c[j].center.y==c[k].center.y)&&(c[j].radius!=c[k].radius))
+                res+=2;
+        }
+    }
+    printf("Кол-во концентрических окружностей: %d \n",res);
+    return res;
+}
+
+int find_nedte(struct circle c[], int i)
+{
+    int res=0;
+    
+    double x1,x2,y1,y2,r1,r2;
+    double x0,y0,r0;
+    double d12;
+    
+    for (int j=0; j<i-1;j++)
+    {
+        for (int k=0;k<i;k++)
+        {
+            if (j!=k)
+            {
+                r1=c[j].radius;
+                x1=c[j].center.x;
+                y1=c[j].center.y;
+                
+                r2=c[k].radius;
+                x2=c[k].center.x;
+                y2=c[k].center.y;
+        
+                r0=r1-r2;
+                x0=x1-x2;
+                y0=y1-y2;
+                d12=sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+                
+                
+                
+                //printf(" (%.0f,%.0f,%.0f)(%d)  (%.0f,%.0f,%.0f)(%d) (%.0f,%.0f,%.0f)  \n",r1,x1,y1,j+1,r2,x2,y2,k+1,r0,x0,y0 );
+                
+                if(((x0*x0)+(y0*y0)<=(r0*r0))&&(r0>=0)) res++;
+                //printf("(%.0f,%.0f,%.0f)",r0,x0,y0);
+                //printf("(%d,%d) %d \n",j+1,k+1,res);
+            }
+        }
+    }
+    
+    printf("Кол-во вложенных окружностей: %d \n",res);
+    return res;
+}
+
+int find_cross(struct circle c[], int i)
+{
+    int res=0;
+    double x1,x2,x3,y1,y2,y3,r1,r2,r3;
+    double d12,d23,d13;
+    for (int j=0; j<i; j++)
+    {
+        for(int k=j+1; k<i; k++)
+        {
+            for (int n=k+1; n<i; n++)
+            {
+                r1=c[j].radius;
+                x1=c[j].center.x;
+                y1=c[j].center.y;
+                
+                r2=c[k].radius;
+                x2=c[k].center.x;
+                y2=c[k].center.y;
+                
+                r3=c[n].radius;
+                x3=c[n].center.x;
+                y3=c[n].center.y;
+                
+                d12=sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+                d23=sqrt( (x2-x3)*(x2-x3) + (y2-y3)*(y2-y3) );
+                d13=sqrt( (x2-x3)*(x2-x3) + (y2-y3)*(y2-y3) );
+                
+                //printf(" (%.0f,%.0f,%.0f)(%d)  (%.0f,%.0f,%.0f)(%d)  (%.0f,%.0f,%.0f)(%d) \n",r1,x1,y1,j+1,r2,x2,y2,k+1,r3,x3,y3,n+1);
+                
+                //printf("      d12=%f (%.0f) | d23=%f (%.0f) | d13=%f (%.0f) \n",d12,r1+r2,d23,r2+r3,d13,r1+r3);
+                
+                if( (d12<=(r1+r2)) && (d23<=(r2+r3)) && (d13<=(r1+r3)) )
+                    res+=3;
+            }
+        }
+    }
+    printf("Кол-во трипопарно пресекающихся окружностей: %d \n",res/2);
+    return res/2;
+}
+
+int find_alone(struct circle c[], int i)
+{
+    int res=0;
+    int p=0;
+    double x1,x2,y1,y2,r1,r2;
+    double d12;
+    
+    for (int j=0; j<i-1;j++)
+    {
+        for (int k=0;k<i;k++)
+        {
+            if (j!=k)
+            {
+            r1=c[j].radius;
+            x1=c[j].center.x;
+            y1=c[j].center.y;
+            
+            r2=c[k].radius;
+            x2=c[k].center.x;
+            y2=c[k].center.y;
+            
+            d12=sqrt( (x1-x2)*(x1-x2) + (y1-y2)*(y1-y2) );
+            
+            //printf(" (%.0f,%.0f,%.0f)(%d)  (%.0f,%.0f,%.0f)(%d) (%f) \n",r1,x1,y1,j+1,r2,x2,y2,k+1, d12);
+            
+            if(d12>r1+r2) p++;
+            }
+        }
+        //printf("%d %d \n",j+1,p);
+        if (p==i) res++;
+        p=0;
+    }
+    
+    printf("Кол-во уединенных окружностей: %d \n",res);
+    
+    return res;
+}
+
+//------main.c (main.cpp)------//
 
 #define TASK 2
 
@@ -359,6 +524,50 @@ b) комплексное число
     print1(&e);
     print1(&f);
     
+    return 0;
+}
+#endif
+
+#if TASK==3
+#include "circle.h"
+
+int main()
+{
+    /*
+     Пусть целосиленная окружность описана следующим образом:
+     struct point { int x; int y;};
+     struct circle { int radius; struct point center;} ;
+     Пусть есть массив struct circle plane[50], содержащий информацию об окружностьях на плоскости ю Написать функцию определяющую:
+     a. есть ли среди этих окружностей хотя бы две концентрированые окружности;
+     b. есть ли среди этих окружностей хотя бы две две вложенные (не обязательно концентрические) окружности;
+     c. есть ли среди этих окружностей трипопарно пресекающихся окружностей;
+     d. есть ли среди этих окружностей хотя бы одна уединенная окружность (ни с чем не пересекается);
+     */
+    int i=11;
+    struct circle plane[11]={
+        {2,2,2},   //1
+        {3,2,7},   //2
+        {2,4,4},   //3
+        {2,-2,-2}, //4
+        {1,-8,-4}, //5
+        {2,-8,4},  //6
+        {4,-8,4},  //7
+        {2,-10,12},//8
+        {2,6,0},   //9
+        {3,6,-3},  //10
+        {1,6,-5}   //11
+    };
+    //struct circle c={1,2,3};
+    
+    find_concentric( &plane[0],i);
+    
+    find_nedte(&plane[0],i);
+    
+    find_cross( &plane[0], i);
+    
+    find_alone( &plane[0], i);
+    
+    //printf("%d %d %d",c.radius, c.center.y,c.center.x);
     return 0;
 }
 #endif
