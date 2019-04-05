@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	unsigned int timestamp;
 	scanf_s("%d", &timestamp);
 
-	doShit(argv[1], a, b, timestamp);
+	funworkers(argv[1], a, b, timestamp);
 
 	return 0;
 }
@@ -63,7 +63,7 @@ struct pt
 
 
 };
-void doShit(char filename[200], int a, char b, int timestamp);
+void funworkers(char filename[200], int a, char b, int timestamp);
 
 #endif /* workers_h */
 
@@ -74,7 +74,7 @@ void doShit(char filename[200], int a, char b, int timestamp);
 #include "workers.h"
 #include <stdlib.h>
 
-void doShit(char filename[200], int a, char b, int timestamp)
+void funworkers(char filename[200], int a, char b, int timestamp)
 {
 
 	char tmp[12];
